@@ -252,17 +252,11 @@ env.close()
 
 ## Result
 
-```text
+The Policy Iteration algorithm was successfully implemented and executed on the FrozenLake environment. The algorithm converged after 4 iterations, producing the optimal policy and the corresponding optimal state-value function, demonstrating its effectiveness in finding the best sequence of actions to maximize the expected cumulative reward.
 
 
-
-```
----
 
 ## Inference
-```text
+Policy Iteration efficiently solves finite Markov Decision Processes by alternating between policy evaluation and policy improvement. It converges to the optimal policy in a finite number of iterations, making it an effective Dynamic Programming algorithm for environments with known transition probabilities.
 
-
-```
----
 
