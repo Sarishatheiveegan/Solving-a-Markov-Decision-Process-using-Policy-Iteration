@@ -246,9 +246,9 @@ env.close()
 ```
 
 ## Output
+<img width="372" height="357" alt="image" src="https://github.com/user-attachments/assets/177e48e9-3c27-4fc4-a538-9709f7358b65" />
+<img width="375" height="345" alt="image" src="https://github.com/user-attachments/assets/e5428435-0c3c-404c-aa4e-bf0691851e6a" />
 
-<img width="462" height="351" alt="image" src="https://github.com/user-attachments/assets/861756f5-9287-42de-92af-5f0922c47fde" />
-<img width="462" height="351" alt="image" src="https://github.com/user-attachments/assets/4775220a-5324-42e4-bfa3-ac464b56e820" />
 
 ## Result
 
