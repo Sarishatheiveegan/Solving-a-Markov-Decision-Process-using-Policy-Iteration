@@ -125,42 +125,130 @@ If the improved policy is the same as the old policy, the policy is considered s
 ## Python Program
 
 ```python
+import gymnasium as gym
+import numpy as np
+# -------------------------------------------------
+# Create FrozenLake Environment
+# -------------------------------------------------
 
+env = gym.make("FrozenLake-v1", is_slippery=True)
+env = env.unwrapped
+
+n_states = env.observation_space.n
+n_actions = env.action_space.n
+
+gamma = 0.99
+theta = 1e-10
+policy = np.ones(n_states)
+action_symbols = {
+    0: "←",
+    1: "↓",
+    2: "→",
+    3: "↑"
+}
 # -------------------------------------------------
 # Policy Evaluation
 # -------------------------------------------------
+def policy_evaluation(policy, env, gamma=0.99, theta=1e-10):
 
+    V = np.zeros(n_states)
 
+    while True:
+
+        delta = 0
+
+        for s in range(n_states):
+
+            old_value = V[s]
+
+            action = policy[s]
+
+            value = 0
+
+            for prob, next_state, reward, done in env.P[s][action]:
+                value += prob * (reward + gamma * V[next_state])
+
+            V[s] = value
+
+            delta = max(delta, abs(old_value - V[s]))
+
+        if delta < theta:
+            break
+
+    return V
 
 # -------------------------------------------------
 # Policy Improvement
 # -------------------------------------------------
+def policy_improvement(V, env, gamma=0.99):
 
-#-------------------------------------------------
+    new_policy = np.zeros(n_states, dtype=int)
+
+    for s in range(n_states):
+
+        action_values = np.zeros(n_actions)
+
+        for a in range(n_actions):
+
+            for prob, next_state, reward, done in env.P[s][a]:
+                action_values[a] += prob * (reward + gamma * V[next_state])
+
+        new_policy[s] = np.argmax(action_values)
+
+    return new_policy
+print("Name:MARINO SARISHA T")
+print("Register Number: 212223240084")
+# -------------------------------------------------
 # Policy Iteration
 # -------------------------------------------------
+print("\nInitial Random Policy:\n")
 
+initial_policy_grid = np.array([action_symbols[a] for a in policy])
+print(initial_policy_grid.reshape((4, 4)))
 
+# Initial Value Function
+initial_V = policy_evaluation(policy, env, gamma, theta)
 
+print("\nInitial State-Value Function:\n")
+print(np.round(initial_V.reshape((4, 4)), 4))
+
+iterations = 0
+
+while True:
+
+    iterations += 1
+
+    V = policy_evaluation(policy, env, gamma, theta)
+
+    new_policy = policy_improvement(V, env, gamma)
+
+    if np.array_equal(policy, new_policy):
+        break
+
+    policy = new_policy
+
+# -------------------------------------------------
+# Display Functions
+# -------------------------------------------------
+
+print("\nTotal Policy Iterations:", iterations)
+
+print("\nFinal Optimal State-Value Function:\n")
+print(np.round(V.reshape((4, 4)), 4))
+
+print("\nFinal Optimal Policy:\n")
+
+final_policy_grid = np.array([action_symbols[a] for a in policy])
+print(final_policy_grid.reshape((4, 4)))
+
+env.close()
 
 ```
 
 ## Output
 
-```text
-
-Total policy iterations: 
-
-Optimal State-Value Function:
-
-
-Optimal Policy:
-
-```
-
-
-
----
+<img width="462" height="351" alt="image" src="https://github.com/user-attachments/assets/861756f5-9287-42de-92af-5f0922c47fde" />
+<img width="462" height="351" alt="image" src="https://github.com/user-attachments/assets/4775220a-5324-42e4-bfa3-ac464b56e820" />
 
 ## Result
 
